@@ -13,10 +13,12 @@ class CreateFavoriteTable extends Migration
      */
     public function up()
     {
-        Schema::create('favorite', function (Blueprint $table) {
-            $table->bigIncrements('id');// id favorite
-            $table->bigInteger('idUser');
-            $table->timestamps();
+        Schema::create('favorites', function (Blueprint $table) {
+            $table->bigIncrements('id')->autoincrement();// id favorite
+            $table->bigInteger('idUser')->unsigned();
+            $table->bigInteger('idPosts')->unsigned();
+            $table->foreign('idPosts')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

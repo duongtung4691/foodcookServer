@@ -13,18 +13,18 @@ class CreatePost extends Migration
      */
     public function up()
     {
-        Schema::create('post', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->autoIncrement();
-            $table->unsignedBigInteger('idFavorite');
-            $table->unsignedBigInteger('idUser')->index();
-            $table->string('title')->unique();
+            $table->unsignedBigInteger('idTypes');
+            $table->unsignedBigInteger('idUser');
+            $table->string('title');
             $table->string("linking");
             $table->string('image_thumb');
-            $table->binary('description');
-            $table->date('createAt');
-            $table->date('updateAt');
+            $table->binary('contents');
+            $table->date('createAt')->nullable();
+            $table->date('updateAt')->nullable();
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('idFavorite')->references('id')->on('favorite')->onDelete('cascade');
+            $table->foreign('idTypes')->references('id')->on('types')->onDelete('cascade');
         });
     }
 
