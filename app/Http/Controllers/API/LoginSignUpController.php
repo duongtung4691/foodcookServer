@@ -37,12 +37,15 @@ class LoginSignUpController extends Controller {
             'remember_me' => 'boolean'
         ]);
         $credentials = request(['phoneNumber', 'password']);
-        if(!Auth::attempt($credentials))
+
+        if(!Auth::attempt($credentials)){
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
+        }
+
         $user = $request->user();
-        $tokenResult = $user->createToken('Personal Access Token');
+        $tokenResult = $user->createToken('k2PqZ9s1kBrbZdQjIDQg6UHCQMmIowi8Eollc0JK');
         $token = $tokenResult->token;
         if ($request->remember_me)
             $token->expires_at = Carbon::now()->addWeeks(1);

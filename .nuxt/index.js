@@ -12,7 +12,7 @@ import { setContext, getLocation, getRouteData } from './utils'
 
 
 /* Plugins */
-import nuxt_plugin_axios_78d12a07 from 'nuxt_plugin_axios_78d12a07' // Source: ./axios.js
+import nuxt_plugin_axios_b8adff1e from 'nuxt_plugin_axios_b8adff1e' // Source: ./axios.js
 import nuxt_plugin_markdownplugins_0ca86838 from 'nuxt_plugin_markdownplugins_0ca86838' // Source: ../resources/nuxt/plugins/markdown-plugins
 
 
@@ -135,7 +135,7 @@ async function createApp (ssrContext) {
 
   // Plugin execution
   
-  if (typeof nuxt_plugin_axios_78d12a07 === 'function') await nuxt_plugin_axios_78d12a07(app.context, inject)
+  if (typeof nuxt_plugin_axios_b8adff1e === 'function') await nuxt_plugin_axios_b8adff1e(app.context, inject)
   if (typeof nuxt_plugin_markdownplugins_0ca86838 === 'function') await nuxt_plugin_markdownplugins_0ca86838(app.context, inject)
   
 
