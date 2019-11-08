@@ -21,8 +21,8 @@ Route::apiResource('posts', 'API\PostController');
 Route::prefix('v1')->group(function(){
     Route::post('login', 'API\LoginSignUpController@login');
     Route::post('register', 'API\LoginSignUpController@register');
-    Route::group(['middleware' => 'api'], function(){
-        Route::get('getUser', 'API\LoginSignUpController@user');
+    Route::group(['middleware' => ['auth:api']], function(){
+        Route::get('user', 'API\LoginSignUpController@user');
         Route::post('logout', 'API\LoginSignUpController@logout');
     });
 });
