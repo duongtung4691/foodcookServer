@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\UserCollection;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -45,10 +47,10 @@ class LoginSignUpController extends Controller {
         }
 
         $user = $request->user();
-        $tokenResult = $user->createToken('k2PqZ9s1kBrbZdQjIDQg6UHCQMmIowi8Eollc0JK');
+        $tokenResult = $user->createToken('phoneNumber');
         $token = $tokenResult->token;
         if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(1);
+            $token->expires_at = Carbon::now()->addMinutes(1);
         $token->save();
         return response()->json([
             'access_token' => $tokenResult->accessToken,
@@ -70,10 +72,17 @@ class LoginSignUpController extends Controller {
     /**
      * Get the authenticated User
      *
-     * @return [json] user object
+     * @param Request $request
+     * @return JsonResponse [json] user object
      */
-    public function user(Request $request)
-    {
-        return response()->json($request->user());
+    public function user(Request $request){
+        $user = Auth::user();
+        echo $user;
+//        return response()->json([
+//            'id' => $request->user()->id,
+//            'type' => $request->user()->idType,
+//            'phoneNumber' => $request->user()->phoneNumber,
+//            'email' => $request->user()->email,
+//        ]);
     }
 }

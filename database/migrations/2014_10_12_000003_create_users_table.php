@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->autoIncrement();
+            $table->unsignedBigInteger('idType');
             $table->string('name');
             $table->string('phoneNumber');
             $table->string('email')->nullable();
@@ -22,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken()->nullable();
             $table->timestamps();
+            $table->foreign('idType')->references('id')->on('user_types')->onDelete('cascade');
         });
     }
 
