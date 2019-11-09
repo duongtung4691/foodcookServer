@@ -19,9 +19,9 @@ use Illuminate\Http\Request;
 
 Route::apiResource('posts', 'API\PostController');
 Route::prefix('v1')->group(function(){
-    Route::post('login', 'API\LoginSignUpController@login');
-    Route::post('register', 'API\LoginSignUpController@register');
-    Route::group(['middleware' => ['auth:api']], function(){
+    Route::post('login', 'API\LoginSignUpController@login')->name('login');
+    Route::post('register', 'API\LoginSignUpController@register')->name('register');
+    Route::middleware('auth:api')->group(function () {
         Route::get('user', 'API\LoginSignUpController@user');
         Route::post('logout', 'API\LoginSignUpController@logout');
     });

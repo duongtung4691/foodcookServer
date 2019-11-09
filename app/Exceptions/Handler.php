@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -48,6 +49,9 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
 //
+
+//        echo $request;
+//        echo $exception;
         if ($exception->getMessage() === 'Unauthenticated.')
             return response()->json(
                 [
@@ -58,5 +62,14 @@ class Handler extends ExceptionHandler
                 ], 401
             );
         return parent::render($request, $exception);
+    }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if($request->expectsJson() || $request->header('Authorization')){
+            $response = ['status' => 'error','message' => 'Incorrect headers supplied'];
+            return response()->json($response);
+        }
+        return redirect()->guest('login');
     }
 }

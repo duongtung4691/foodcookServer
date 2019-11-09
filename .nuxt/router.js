@@ -3,8 +3,8 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const _26256340 = () => import('../resources/nuxt/pages/editor_custom.vue' /* webpackChunkName: "pages/editor_custom" */).then(m => m.default || m)
-const _3c63df0f = () => import('../resources/nuxt/pages/index.vue' /* webpackChunkName: "pages/index" */).then(m => m.default || m)
+const _6e2670ec = () => import('..\\resources\\nuxt\\pages\\editor_custom.vue' /* webpackChunkName: "pages_editor_custom" */).then(m => m.default || m)
+const _e6194e8a = () => import('..\\resources\\nuxt\\pages\\index.vue' /* webpackChunkName: "pages_index" */).then(m => m.default || m)
 
 
 
@@ -66,17 +66,17 @@ export function createRouter () {
     routes: [
 		{
 			path: "/editor:custom",
-			component: _26256340,
+			component: _6e2670ec,
 			name: "editorcustom"
 		},
 		{
 			path: "/",
-			component: _3c63df0f,
+			component: _e6194e8a,
 			name: "index"
 		},
 		{
 			path: "/__laravel_nuxt__",
-			component: _3c63df0f,
+			component: _e6194e8a,
 			name: "__laravel_nuxt__"
 		}
     ],
