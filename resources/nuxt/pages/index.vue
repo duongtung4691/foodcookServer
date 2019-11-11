@@ -1,25 +1,53 @@
 <template>
     <div>
-        <div class="container">
+        phone <input type="tel"/>
 
-            <header>
-                <h1>v-markdown-editor</h1>
-                <h4>Markdown Editor component for Vue.js</h4>
-            </header>
+        <button onclick="auth()">auth</button>
+        <label>인증 여부 :</label>
+
+        <div id="recaptcha-container"></div>
 
 
-            <div class="form-group">
-                <markdown-editor toolbar='redo undo | bold italic strikethrough heading | image link | numlist bullist code quote | preview fullscreen'
-                                 buttonClass="btn btn-outline-success"></markdown-editor>
-            </div>
+        <script src="index.js"></script>
+        <!--        <div class="container">-->
 
-        </div>
+        <!--            <header>-->
+        <!--                <h1>v-markdown-editor</h1>-->
+        <!--                <h4>Markdown Editor component for Vue.js</h4>-->
+        <!--            </header>-->
+
+
+        <!--            <div class="form-group">-->
+        <!--                <markdown-editor toolbar='redo undo | bold italic strikethrough heading | image link | numlist bullist code quote | preview fullscreen'-->
+        <!--                                 buttonClass="btn btn-outline-success"></markdown-editor>-->
+        <!--            </div>-->
+
+        <!--        </div>-->
 
     </div>
 </template>
+<script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
 
 <script>
     // import VueMarkdown from 'vue-markdown' // production
+    var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container',{
+        'size':'invisible',
+        'callback':function(responce){
+
+        }
+    });
+
+    var config = {
+        apiKey: "AIzaSyCDBA9as8Rv5nqy2JwX6Ja1E9ziOKJyazI",
+        authDomain: "fir-phone-number-auth.firebaseapp.com",
+        databaseURL: "https://fir-phone-number-auth.firebaseio.com",
+        projectId: "fir-phone-number-auth",
+        storageBucket: "",
+        messagingSenderId: "541176602335"
+    };
+
+    firebase.initializeApp(config);
+
     export default {
         data() {
             return {
@@ -27,11 +55,37 @@
             }
         },
         methods: {
-            val() {
-                this.value = "jjkjlkjljlkjlkjlkjlkj"
+            auth() {
+                var number = '+84' + document.querySelector('input').value;
+
+                firebase.auth().signInWithPhoneNumber(number, this.ecaptcha).then(function (e) {
+                    console.log('문자 전송 성공');
+
+
+                    var
+                        code = prompt('인증 번호를 입력해주세요', '');
+
+
+                    if (code === null) return;
+
+
+                    e.confirm(code).then(function (result) {
+                        console.log('인증 성공', result.user);
+
+                        document.querySelector('label').textContent += '성공 ' + result.user.phoneNumber;
+
+                    }).catch(function (error) {
+                        console.error('인증 실패', error);
+
+                    });
+
+                })
+                    .catch(function (error) {
+                        console.error('문자 전송 실패', error);
+
+                    });
             }
-        }
-    };
+        };
 </script>
 <style scoped>
     html, body {
@@ -115,11 +169,11 @@
         font-weight: 400;
         color: #fff;
     }
-    footer img{
+
+    footer img {
         height: 50px;
         margin-right: 8px;
     }
-
 
 
     code[data-lang], pre[data-lang], pre[data-lang] code {
@@ -148,11 +202,11 @@
         border-radius: .3em
     }
 
-    :not(pre)>code[data-lang], pre[data-lang] {
+    :not(pre) > code[data-lang], pre[data-lang] {
         background: #eee
     }
 
-    :not(pre)>code[data-lang] {
+    :not(pre) > code[data-lang] {
         padding: .1em;
         border-radius: .3em;
         white-space: normal
