@@ -6,27 +6,8 @@
         <label>인증 여부 :</label>
 
         <div id="recaptcha-container"></div>
-
-
-        <script src="index.js"></script>
-        <!--        <div class="container">-->
-
-        <!--            <header>-->
-        <!--                <h1>v-markdown-editor</h1>-->
-        <!--                <h4>Markdown Editor component for Vue.js</h4>-->
-        <!--            </header>-->
-
-
-        <!--            <div class="form-group">-->
-        <!--                <markdown-editor toolbar='redo undo | bold italic strikethrough heading | image link | numlist bullist code quote | preview fullscreen'-->
-        <!--                                 buttonClass="btn btn-outline-success"></markdown-editor>-->
-        <!--            </div>-->
-
-        <!--        </div>-->
-
     </div>
 </template>
-<script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
 
 <script>
     // import VueMarkdown from 'vue-markdown' // production
@@ -85,7 +66,8 @@
 
                     });
             }
-        };
+        }
+    }
 </script>
 <style scoped>
     html, body {

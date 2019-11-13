@@ -3,6 +3,7 @@ namespace App\Http\Controllers\API;
 
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class LoginSignUpController extends Controller {
+    protected $url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/sendVerificationCode";
 
     public function register(Request $request){
         $request->validate([
@@ -88,31 +90,28 @@ class LoginSignUpController extends Controller {
             'email' => $request->user()->email,
         ]);
     }
+
     /**
      * [login description]
-     * @param  Request $request [description]
+     * @param Request $request [description]
      * @return [type]           [description]
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function loginWithFacebook(Request $request)
     {
-        echo "<script>";
-        echo "alert('hello');";
+        $urlQuery = $this->url.'?key='.env('FIREBASE_WEB_ID');
 
-//        echo  "AccountKit.login(
-//                'PHONE',
-//              {countryCode: $request->countryCode, phoneNumber: $request->phoneNumber}, // will use default values if not specified
-//              loginCallback
-//            );";
-        echo "</script>";
+        $client = new Client();
 
-//        $url = $this->tokenExchangeUrl.'grant_type=authorization_code'.
-//            '&code='. $request->get('code').
-//            "&access_token=AA|$this->appId|$this->appSecret";
-//        $apiRequest = $this->client->request('GET', $url);
-//        $body = json_decode($apiRequest->getBody());
-//        $this->userAccessToken = $body->access_token;
-//        $this->refreshInterval = $body->token_refresh_interval_sec;
-//        return $this->getData();
+        $apiRequest = $client->post($urlQuery,[
+            RequestOptions::JSON => [
+                ['phoneNumber' => $request->phoneNumber],
+                ['recaptchaToken' => $request->recaptchaToken]
+            ]
+        ]);
+        $body = json_decode($apiRequest->getBody());
+
+        return $body;
     }
 
 

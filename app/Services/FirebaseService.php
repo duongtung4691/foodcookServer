@@ -42,16 +42,16 @@ class FirebaseService
 //            ->withDatabaseUri(config('services.firebase.database_url'))
 //            ->createAuth();
     }
-    public function verifyPhone($phone)
-    {
-        try {
-            $response =  $this->auth->getUserByPhoneNumber($phone);
-            return $response->uid;
-        } catch(PhoneNumberExists $e) {
-            logger()->info('Error login to firebase: Tried to create an already existent user');
-        } catch(FirebaseException $e) {
-            logger()->error('Error login to firebase: ' . $e->getMessage());
-        }
-        return false;
-    }
+//    public function verifyPhone($phone)
+//    {
+//        try {
+//            $response =  $this->auth->createUser($phone);
+//            return $response->uid;
+//        } catch(PhoneNumberExists $e) {
+//            logger()->info('Error login to firebase: Tried to create an already existent user');
+//        } catch(FirebaseException $e) {
+//            logger()->error('Error login to firebase: ' . $e->getMessage());
+//        }
+//        return false;
+//    }
 }
