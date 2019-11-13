@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Firebase\Guard;
 use Carbon\Carbon;
+use Kreait\Firebase\Auth;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -23,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
+
     public function boot()
     {
         $this->registerPolicies();
